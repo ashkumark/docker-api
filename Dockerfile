@@ -1,7 +1,7 @@
 
 
 #FROM maven:3.8.2-openjdk-8
-FROM jenkins-agent
+FROM jenkins/jenkins:lts
 LABEL maintainer="ash"
 
 WORKDIR /home/docker-jenkins-test
