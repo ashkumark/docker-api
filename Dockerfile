@@ -1,6 +1,6 @@
 
 
-FROM jenkins/jenkins:latest-jdk8
+FROM maven:3.8.2-openjdk-8
 LABEL maintainer="ash"
 
 WORKDIR /home/docker-jenkins-test
@@ -22,24 +22,3 @@ RUN apt-get update -y && apt-get install -y google-chrome-stable && \
     DRIVERVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMEVER") && \
     wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/$DRIVERVER/chromedriver_linux64.zip" && \
     unzip /chromedriver/chromedriver* -d /chromedriver
-    
-RUN chown -R jenkins:jenkins /chromedriver
-
-RUN mkdir /var/log/jenkins
-RUN chown -R  jenkins:jenkins /var/log/jenkins
-
-#Docker 
-RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common && \
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
-    apt-key fingerprint 0EBFCD88 && \
-    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-   
-RUN apt-get update -y && \
-    apt-cache policy docker-ce	&& \
-    apt-get install -y docker-ce docker-ce-cli containerd.io
-
-RUN usermod -aG docker jenkins
-
-USER jenkins
-
-RUN jenkins-plugin-cli --plugins "blueocean:1.25.0 docker-workflow:1.26"
