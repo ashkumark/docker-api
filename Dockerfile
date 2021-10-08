@@ -23,3 +23,7 @@ RUN apt-get update -y && apt-get install -y google-chrome-stable && \
     DRIVERVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMEVER") && \
     wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/$DRIVERVER/chromedriver_linux64.zip" && \
     unzip /chromedriver/chromedriver* -d /chromedriver
+
+    
+RUN apt-get update
+RUN curl -sSL https://get.docker.com/ | sh
